@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Logan Bunch's Mary's Lamb DOM Manipulation</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    #wrapper {
+    border: 3px solid #666;
+    padding: 0 10px 15px;
+    width: 280px;
+    height: 230px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1 id="head">Placeholder heading</h1>
+      <p id="para">Placeholder text</p>
+      
+    </div>
+  
+    <script>
+      document.getElementById("head").innerHTML = "Mary's Lamb(Logan)";
+      document.getElementById("para").innerHTML = 
+        "Mary had a little lamb,<br />\
+        its fleece was white as snow,<br />\
+        and everywhere that Mary went<br />\
+        the lamb was sure to go.";
+    </script>
+  </body>
+</html>
