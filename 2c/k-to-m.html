@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Happy Birthday</title>
+    <meta charset="UTF-8">
+    <style>
+    #wrapper {
+    border: 3px solid #666;
+    padding: 0 10px 15px;
+    width: 400px;
+    height: 230px;
+    }
+    </style>
+  </head>
+  <body>
+    <div id="wrapper">
+      <h1 id="head">Kilometers to Miles - Logan</h1>
+      <p id="para"></p>
+    </div>
+
+    <script>
+      "use strict";
+      let kmStr;
+      kmStr = window.prompt("Enter the number of kilometers", "1.0");
+      let km = parseFloat(kmStr)
+      const KM_TO_MI = 0.621371
+      let miles = km * KM_TO_MI
+      document.getElementById("para").innerHTML = km + "km = " + miles.toFixed(2) + " miles";
+
+    </script>
+  </body>
+</html>
