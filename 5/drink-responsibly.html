@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>First Dates Lab</title>
+  <meta charset="utf-8">
+  <style>
+    html {
+      height: 100vh;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 1em;
+      background-color: #efefec;
+      height: 100%;
+    }
+
+    #container {
+      display: flex;
+      height: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #container>* {
+      margin: 0.3em;
+    }
+
+    .date-box {
+      font-size: 3em;
+      background-color: #080808;
+      padding: .4em;
+      color: #f4f4f4;
+      font-family: monospace;
+    }
+
+    #birthdate {
+      font-size: 4em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Logan's Pub and Grill</h1>
+    <h2>Have your ID ready</h2>
+    <h3>Today's Date:</h3>
+    <p class="date-box" id="today"></p>
+    <h4>You must have been born <u>ON OR BEFORE</u>:
+    </h4>
+    <p class="date-box" id="birthdate"></p>
+  </div>
+
+  <script>
+    "use strict";
+    // format a given string to the required format
+    function formatDateToMertzRequestedFormat(date) {
+      let dateString = `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+      return dateString;
+    }
+    // get and display today's date
+    let today = new Date();
+    document.getElementById("today").innerHTML =
+      formatDateToMertzRequestedFormat(today);
+
+    // get birthdate of legal drinking age
+    let birthdate = today
+    birthdate.setFullYear(birthdate.getFullYear() - 21);
+    document.getElementById("birthdate").innerHTML =
+      formatDateToMertzRequestedFormat(birthdate);
+
+  </script>
+</body>
+
+</html>

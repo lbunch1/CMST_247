@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Kilometers to Miles</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+    }
+
+    div {
+      border: 3px solid #666;
+      padding: 0px 10px 15px;
+      width: 400px;
+      height: 250px;
+    }
+
+    input,
+    button {
+      font-family: Arial, sans-serif;
+      font-size: 1.2em;
+      margin: 10px 15px;
+    }
+
+    label {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+      <h1>Kilometers to Miles - By Logan Bunch</h1>
+    <input type="number" id="km" value="1" step="0.1" onclick="erase()"><label>kilometers</label>
+    <button onclick="show()">Convert to Miles</button>
+    <input type="text" id="miles" readonly><label>miles</label>
+  </div>
+  <script>
+    "use strict";
+    function show() {
+      //input kilometrs and convert to floating point
+      let km = parseFloat(document.getElementById("km").value);
+      //convert to miles; 1 km = 0.621371.
+      const KM_TO_MI = 0.621371;
+      let miles = km * KM_TO_MI;
+      //display the result in the miles text field
+      document.getElementById("miles").value = miles.toFixed(2);
+    }
+    function erase() {
+      //earse the value in the miles text field
+      document.getElementById("miles").value = "";
+    }
+  </script>
+</body>
+
+</html>

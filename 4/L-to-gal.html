@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Liters to US Gallons</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+    }
+
+    div {
+      border: 3px solid #666;
+      padding: 0px 10px 15px;
+      width: 400px;
+      height: 250px;
+    }
+
+    input,
+    button {
+      font-family: Arial, sans-serif;
+      font-size: 1.2em;
+      margin: 10px 15px;
+    }
+
+    label {
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+      <h1>Liters to US Gallons - By Logan Bunch</h1>
+    <input type="number" id="liters" value="1" step="0.1" onclick="erase()"><label>liters</label>
+    <button onclick="show()">Convert to US Gallons</button>
+    <input type="text" id="gallons" readonly><label>US gallons</label>
+  </div>
+  <script>
+    "use strict";
+    function show() {
+      //input liters and convert to floating point
+      let liters = parseFloat(document.getElementById("liters").value);
+      //convert to gallons; 1 liter = 0.264172.
+      const L_TO_GAL = 0.264172;
+      let gallons = liters * L_TO_GAL;
+      //display the result in the gallons text field
+      document.getElementById("gallons").value = gallons.toFixed(2);
+    }
+    function erase() {
+      //earse the value in the gallons text field
+      document.getElementById("gallons").value = "";
+    }
+  </script>
+</body>
+
+</html>

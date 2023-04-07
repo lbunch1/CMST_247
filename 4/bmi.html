@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>What Is Your BMI?</title>
+  <style>
+    body {
+      font-family: Garamond, serif;
+    }
+
+    div {
+      border: 3px solid #666;
+      padding: 0px 10px 15px;
+      width: 400px;
+    }
+
+    p,
+    label {
+      font-size: 1.2em;
+    }
+
+    fieldset {
+      margin-bottom: 15px;
+    }
+
+    input,
+    button {
+      font-family: Arial, sans-serif;
+      font-size: 1.2em;
+      margin: 10px 15px;
+    }
+
+    button {
+      font-family: Arial, sans-serif;
+      font-size: 2em;
+      margin: 10px 15px 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>What Is Your BMI?</h1>
+    <p>BMI, which stands for Body Mass Index, is a measure of body fat that is meaningful for adults.</p>
+    <p>A healthy BMI value ranges from 18.5 to 24.9. What is yours?</p>
+    <fieldset>
+      <legend>Weight</legend>
+      <input type="number" id="pounds" value="150" step="1" onclick="erase()"><label>pounds</label>
+    </fieldset>
+    <fieldset>
+      <legend>Height</legend>
+      <input type="number" id="feet" value="5" step="1" onclick="erase()"><label>feet</label>
+      <input type="number" id="inches" value="9" step="1" onclick="erase()"><label>inches</label>
+    </fieldset>
+    <button onclick="show()">Calculate BMI</button>
+    <fieldset>
+      <legend>BMI</legend>
+      <input type="text" id="bmi" readonly>
+    </fieldset>
+  </div>
+  <script>
+    "use strict";
+    function show() {
+      // retrieve input value for user weight in pounds and parse it as a number
+      let lbs = parseFloat(document.getElementById("pounds").value);
+      // retrieve input value of feet, parse it as a number and convert it to inches.
+      let feetToInches = parseFloat(document.getElementById("feet").value) * 12;
+      // retrieve input value of inches and store the total height in inches.
+      let totalHeightInInches = feetToInches + parseFloat(document.getElementById("inches").value);
+      //calculate BMI using height and weight
+      let bmi = 703 * (lbs / (totalHeightInInches ** 2));
+      //insert bmi to bmi text field
+      document.getElementById("bmi").value = bmi.toFixed(2);
+    };
+    function erase() {
+      document.getElementById("bmi").value = "";
+    };
+  </script>
+</body>
+
+</html>

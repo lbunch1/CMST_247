@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>One Potato, Two Potato</title>
+  <style>
+    body {
+      font-family: Garamond, Georgia, serif;
+      font-size: 1.5em;
+    }
+
+    #container {
+      width: 50%;
+      margin: auto;
+      text-align: center;
+      padding: 10px;
+      background-color: Linen;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h2>One Potato, Two Potato</h2>
+    <p id="output"></p>
+  </div>
+  <script>
+    "use strict";
+    // designate output DOM element
+    const out = document.getElementById("output")
+    for (let i = 1; i <= 8; i++) {
+      switch (i) {
+        case 1:
+          out.innerHTML += "1 potato<br>";
+          break;
+        case 4:
+          out.innerHTML += "FOUR<br>";
+          break;
+        case 8:
+          out.innerHTML += "MORE";
+          break;
+        default:
+          out.innerHTML += i + " potatoes<br>";
+          break;
+      }
+
+    }
+  </script>
+
+</body>
+
+</html>

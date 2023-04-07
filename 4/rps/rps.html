@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Rock, Paper, Scissors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      width: 60%;
+    }
+
+    fieldset {
+      display: grid;
+      grid-template-columns: 101px 101px 101px;
+      grid-gap: 15px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+
+    legend {
+      background-color: white;
+      font-size: 120%;
+    }
+
+    figure {
+      margin: 0;
+    }
+
+    figcaption {
+      margin: 0px;
+      text-align: center;
+    }
+
+    img {
+      border: 10px outset lightgrey;
+      padding: 3px;
+    }
+
+    #user img:hover {
+      border-color: purple;
+    }
+
+    #btn {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Rock, Paper, Scissors</h1>
+  <fieldset id="user">
+    <legend>Choose by clicking a picture</legend>
+    <figure>
+      <img id="user0" src="./images/rock.jpg" style="width: 81px; height: 126px;" onclick="display(0)">
+      <figcaption>ROCK</figcaption>
+    </figure>
+    <figure>
+      <img id="user1" src="./images/paper.jpg" style="width: 81px; height: 126px;" onclick="display(1)">
+      <figcaption>PAPER</figcaption>
+    </figure>
+    <figure>
+      <img id="user2" src="./images/scissors.jpg" style="width: 81px; height: 126px;" onclick="display(2)">
+      <figcaption>SCISSORS</figcaption>
+    </figure>
+  </fieldset>
+  <fieldset>
+    <legend>And I will randomly pick mine</legend>
+    <figure>
+      <img id="page0" src="./images/rock.jpg" style="width: 81px; height: 126px;">
+      <figcaption>ROCK</figcaption>
+    </figure>
+    <figure>
+      <img id="page1" src="./images/paper.jpg" style="width: 81px; height: 126px;">
+      <figcaption>PAPER</figcaption>
+    </figure>
+    <figure>
+      <img id="page2" src="./images/scissors.jpg" style="width: 81px; height: 126px;">
+      <figcaption>SCISSORS</figcaption>
+    </figure>
+  </fieldset>
+  <p id="results"></p>
+  <button id="btn" onclick="window.location.reload()">Refresh Page</button>
+  <script>
+    "use strict";
+    function display(which) {
+      // which is 0 = rock, 1 = paper, 2 = scissors
+      // set the clicked one's border and userChose to rock, paper, or scissors
+      let userChoice;
+      switch (which) {
+        case 0:
+          document.getElementById("user0").style.borderColor = "purple";
+          userChoice = "Rock";
+          break;
+        case 1:
+          document.getElementById("user1").style.borderColor = "purple";
+          userChoice = "Paper";
+          break;
+        case 2:
+          document.getElementById("user2").style.borderColor = "purple";
+          userChoice = "Scissors";
+          break;
+      }
+      console.log(userChoice);
+      // select a random number for page's choice
+      let r = Math.floor(Math.random() * 3);
+      // set page's choice border color and pageChoice to rock, paper, or scissors
+      let pageChoice;
+      switch (r) {
+        case 0:
+          document.getElementById("page0").style.borderColor = "purple";
+          pageChoice = "Rock";
+          break;
+        case 1:
+          document.getElementById("page1").style.borderColor = "purple";
+          pageChoice = "Paper";
+          break;
+        case 2:
+          document.getElementById("page2").style.borderColor = "purple";
+          pageChoice = "Scissors";
+          break;
+      }
+      // determine the outcome of the game
+      let result;
+      switch (true) {
+        case userChoice === pageChoice:
+          result = userChoice + " ties " + pageChoice + "<br>WE TIED!";
+          break;
+        case userChoice === "Rock" && pageChoice === "Paper":
+          result = pageChoice + " beats " + userChoice + "<br>YOU LOSE!";
+          break;
+        case userChoice === "Rock" && pageChoice === "Scissors":
+          result = userChoice + " beats " + pageChoice + "<br>YOU WIN!";
+          break;
+        case userChoice === "Paper" && pageChoice === "Rock":
+          result = userChoice + " beats " + pageChoice + "<br>YOU WIN!";
+          break;
+        case userChoice === "Paper" && pageChoice === "Scissors":
+          result = pageChoice + " beats " + userChoice + "<br>YOU LOSE!";
+          break;
+        case userChoice === "Scissors" && pageChoice === "Rock":
+          result = pageChoice + " beats " + userChoice + "<br>YOU LOSE!";
+          break;
+        case userChoice === "Scissors" && pageChoice === "Paper":
+          result = userChoice + " beats " + pageChoice + "<br>YOU WIN!";
+          break;
+      };
+      // insert results in DOM element
+      document.getElementById("results").innerHTML = result;
+      document.getElementById("btn").style.display = "block";
+
+    }
+
+  </script>
+
+</body>
+
+</html>
