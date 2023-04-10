@@ -62,7 +62,7 @@
       color: #cfe2cf;
     }
 
-    #output {
+    #output-table {
       font-family: "Courier New", Courier, monospace;
       font-size: 1em;
       border: solid black 1px;
@@ -74,6 +74,19 @@
     td,
     th {
       padding: .5em;
+    }
+
+    caption {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    th {
+      background-color: darkseagreen;
+    }
+
+    tr:nth-of-type(even) {
+      background-color: #afcfaf;
     }
   </style>
 </head>
@@ -94,18 +107,29 @@
       <input type="number" id="term" min="1" max="60" step="1" value="20" onclick="erase()">
       <button onclick="display()">Display Monthly Growth</button>
     </fieldset>
-    <table id="output" border="1">
-      <tr>
-        <th>Month</th>
-        <th>Balance</th>
-        <th>Interest</th>
-      </tr>
+    <table id="output-table">
+      <caption>Monthly Investment Growth</caption>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Interest</th>
+          <th>Balance</th>
+        </tr>
+        <thead>
+        <tbody id="output">
+        </tbody>
     </table>
   </div>
   <script>
     "use strict";
     // designate output element
+    const outputTable = document.getElementById("output-table");
     const output = document.getElementById("output");
+    //currency object params
+    const currencyObj = {
+      style: "currency",
+      currency: "USD"
+    }
     // calculate the interest compounded each month and display in the form of a table
     function display() {
       // retrieve balance from input field and parse as a float
@@ -113,19 +137,44 @@
       // retrieve APR parse as a float and convert to the constant in our formula
       let apr = parseFloat(document.getElementById("apr").value) / 12 / 100;
       // retrieve the term, parse as  float and convert to months
-      let term = parseFloat(document.getElementById("term").value) * 12;
+      let term = parseFloat(document.getElementById("term").value) * 12
       // create for loop to appends output with the month, new balance and interest.
+      let trNode, tdNode1, tdNode2, tdNode3, txtNode;
       for (let i = 1; i <= term; i++) {
         let interest = balance * apr;
         balance += interest;
-        output.innerHTML += `<tr><td>${i}</td><td>\$${balance.toFixed(2)}</td><td>\$${interest.toFixed(2)}</td></tr>`;
+        // place data into a new table row
+        tdNode1 = document.createElement("td");
+        txtNode = document.createTextNode(i);
+        tdNode1.appendChild(txtNode);
+        // now repeat the process for the interest
+        tdNode2 = document.createElement("td");
+        txtNode = document.createTextNode(new Number(interest).toLocaleString("en-US", currencyObj));
+        tdNode2.appendChild(txtNode);
+        // and for Balance
+        tdNode3 = document.createElement("td");
+        txtNode = document.createTextNode(new Number(balance).toLocaleString("en-US", currencyObj));
+        tdNode3.appendChild(txtNode);
+        // create a tr node
+        trNode = document.createElement("tr");
+        // append the td nodes to the tr node
+        trNode.appendChild(tdNode1);
+        trNode.appendChild(tdNode2);
+        trNode.appendChild(tdNode3);
+        // finally, append the row to the table body
+        output.appendChild(trNode);
+
+
+        // DOM node creation is so cumbersome, I left my original method in but commented out. Template literals make things so easy, but I understand the need to teach node drilling.
+
+        // output.innerHTML += `<tr><td>${i}</td><td>${new Number(interest).toLocaleString("en-US", currencyObj)}</td><td>${new Number(balance).toLocaleString("en-US", currencyObj)}</td ></tr >`;
       }
-      output.style.display = "block";
+      outputTable.style.display = "block";
     }
     //erase chart when any input field is clicked
     function erase() {
-      output.style.display = "none";
-      output.innerHTML = "<tr><th>Month</th><th>Balance</th><th>Interest</th></tr>";
+      outputTable.style.display = "none";
+      output.innerHTML = ""
     }
   </script>
 </body>
