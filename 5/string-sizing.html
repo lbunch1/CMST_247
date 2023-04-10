@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Name Entry Form</title>
+  <meta charset="utf-8">
+  <style>
+    #container {
+      font-family: Arial, sans-serif;
+      font-size: 1.2em;
+      color: darkslategray;
+      border: 3px solid #666;
+      background-color: whitesmoke;
+      padding: 10px 25px 10px 25px;
+      width: 400px;
+      height: 350px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+    }
+
+    h2 {
+      margin: 5px 0;
+    }
+
+    #input {
+      display: inherit;
+      flex-flow: inherit;
+    }
+
+    fieldset {
+      background-color: lightgray;
+      padding: 10px;
+    }
+
+    label {
+      display: inline-block;
+      /* so width is recognized */
+      width: 70px;
+      /* so can right align */
+      text-align: right;
+      font-weight: bold;
+      padding-right: 10px;
+    }
+
+    input {
+      height: 2em;
+      margin-top: 10px;
+      background-color: whitesmoke;
+    }
+
+    button {
+      font-size: 1.2em;
+      margin: 15px 15px 5px 15px;
+    }
+
+    p {
+      font-family: "Courier New", Courier, monospace;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h2>Name Entry Form</h2>
+    <div id="input">
+      <fieldset>
+        <label for="first">First</label>
+        <input type="text" id="first"><br>
+        <label for="middle">Middle</label>
+        <input type="text" id="middle"><br>
+        <label for="last">Last</label>
+        <input type="text" id="last"><br>
+      </fieldset>
+      <button onclick="display()">Show</button>
+    </div>
+    <p>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2<br>12345678901234567890<br><span
+        id="output"></span></p>
+  </div>
+  <script>
+    "use strict";
+    const LENGTH = 15;
+    function capitalizeFirst(name) {
+      return name.substr(0, 1).toUpperCase() + name.slice(1).toLowerCase()
+    }
+
+    function display() {
+      let first = document.getElementById("first").value;
+      let middle = document.getElementById("middle").value;
+      let last = document.getElementById("last").value;
+      first = capitalizeFirst(first);
+      middle = middle.substr(0, 1).toUpperCase()
+      last = capitalizeFirst(last);
+      let fullName = last + ", " + first + " " + middle + ".";
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+      // try cutting off the dot after middle innitial
+      fullName = last + ", " + first + " " + middle;
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+      // try cutting the first name to an initial
+      fullName = last + ", " + first.substr(0, 1) + ". " + middle + ".";
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+      // remove both dots from the two initials
+      fullName = last + ", " + first.substr(0, 1) + " " + middle;
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+      // cut the full name to last name comma first initial
+      fullName = last + ", " + first.substr(0, 1);
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+      //remove the comma after the last name
+      fullName = last + " " + first.substr(0, 1);
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+      // cut last name down so that it followed by space and first initial fit
+      fullName = last.substr(0, 13) + " " + first.substr(0, 1)
+      if (fullName.length <= LENGTH) {
+        document.getElementById("output").innerHTML = fullName;
+        return
+      }
+
+
+      console.log(fullName);
+    }
+  </script>
+</body>
+
+</html>

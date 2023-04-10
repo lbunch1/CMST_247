@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Baby's Due Date</title>
+  <meta charset="UTF-8">
+  <style>
+    #wrapper {
+      border: 3px solid #666;
+      width: 600px;
+      padding: 0 10px 15px;
+      text-align: center;
+      background-color: #efdfff;
+    }
+
+    #error {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <h1 id="head">Baby's Due Date</h1>
+    <h2>Logan Bunch</h2>
+    <p>Enter the date of the first day of patient's last menstrual period</p>
+    <input type="date" id="input"></input>
+    <br>
+    <button onclick="display()">DETERMINE DUE DATE</button>
+    <p id="error"></p>
+    <p>Due date is:</p>
+    <p id="output"></p>
+  </div>
+  <script>
+    "use strict";
+    function display() {
+      //simple form validation
+      if (document.getElementById("input").value === "") {
+        document.getElementById("error").innerHTML = "Please select a date";
+        return
+      }
+      document.getElementById("error").innerHTML = "";
+      //retrieve gestation start date
+      let gestStart = new Date(document.getElementById("input").value + "T00:00:00");
+      // determine due date by adding 280 days to gestStart
+      let dueDate = new Date(gestStart.getFullYear(), gestStart.getMonth(), (gestStart.getDate() + 280), 0, 0, 0, 0);
+      document.getElementById("output").innerHTML = dueDate.toDateString();
+    }
+
+  </script>
+</body>
+
+</html>

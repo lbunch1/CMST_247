@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Days till Xmas</title>
+  <meta charset="UTF-8">
+  <style>
+    #wrapper {
+      border: 3px solid #666;
+      padding: 0 10px 15px;
+      width: 400px;
+      height: 230px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="wrapper">
+    <h1 id="head">How Many Days Till Christmas?</h1>
+    <p id="para"></p>
+    <button onclick="display()">Days till Christmas</butoon>
+  </div>
+  <script>
+    "use strict";
+    function display() {
+      //get todays date 
+      let today = new Date();
+      // determine the year of the next xmas
+      let xmasYear
+      (today.getMonth() === 11 && today.getDate() > 25) ?
+        xmasYear = today.getFullYear() + 1
+        : xmasYear = today.getFullYear();
+
+      // get christmas date
+      let xmasDate = new Date(xmasYear + "-12-25T00:00:00")
+
+      // determine the gap between today and xmas day
+      let daysToXmas = Math.floor((xmasDate.getTime() - today.getTime()) / 1000 / 60 / 60 / 24);
+      console.log(daysToXmas)
+      // Fill in the message depending on the result of the calculation
+      let para = document.getElementById("para");
+      if (today.getMonth() === 11 && today.getDate() === 25) {
+        para.innerHTML = "It's Christmas!!!<br>Merry Christmas!"
+      } else if (today.getMonth() === 11 && today.getDate() === 24) {
+        para.innerHTML = "Today is Christmas Eve<br>Santa will be arriving soon";
+      } else {
+        para.innerHTML = `There are ${daysToXmas} days till Christmas`;
+      }
+    }
+  </script>
+</body>
+
+</html>
