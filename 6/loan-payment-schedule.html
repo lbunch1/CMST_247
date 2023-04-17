@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Loan Payment Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 1.1em;
+    }
+
+    #container {
+      width: 600px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 10px;
+      color: darkblue;
+    }
+
+    #container p {
+      margin: 5px 0px;
+    }
+
+    fieldset {
+      border: none;
+      width: 500px;
+      padding: 10px;
+      display: flex;
+      flex-flow: column nowrap;
+      background-color: skyblue;
+    }
+
+    label {
+      margin-top: 5px;
+      padding: 1px;
+      font-size: .9em;
+    }
+
+    input,
+    button {
+      font-size: 1.1em;
+      background-color: lightcyan;
+      color: darkblue;
+    }
+
+    button {
+      height: 2em;
+      margin: 30px 0px 0px;
+    }
+
+    button:hover {
+      background-color: darkblue;
+      color: skyblue;
+    }
+
+    table {
+      font-family: "Lucida Console", Monaco, monospace;
+      font-size: .9em;
+      margin-top: 20px;
+      border: 1px darkblue solid;
+      width: 100%;
+      visibility: hidden;
+      text-align: right;
+    }
+
+    caption {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    th {
+      background-color: skyblue;
+    }
+
+    tr:nth-of-type(even) {
+      background-color: skyblue;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h2>Loan Payment Calculator</h2>
+    <p>If you are thinking of taking out a loan, this calculator shows what you must pay every month and the total
+      interest you will pay over the life of the loan.</p>
+    <p>Enter the amount of the loan, the annual interest rate, and the number of years for the loan</p>
+    <p>You can also see an "amortization schedule," which shows how much each of your payments goes to interest every
+      month.</p>
+    <fieldset>
+      <label for="principal">$ Amount of Loan (the "principal")</label>
+      <input type="number" onclick="erase()" id="principal" min="0" step="100" value="5000">
+      <label for="apr">Annual Interest Rate (%)</label>
+      <input type="number" id="apr" min="0" max="20" step="0.125" value="4.5" onclick="erase()">
+      <label for="term">Term of the Loan (in years)</label>
+      <input type="number" id="term" min="0" max="30" step="1" value="5" onclick="erase()">
+      <button onclick="display()">Display Results</button>
+      <label for="pmt">Payment; to be paid monthly</label>
+      <input type="text" id="pmt" value="" readonly>
+      <label for="totalinterest">Total Interest (over life of loan)</label>
+      <input type="text" id="totalinterest" value="" readonly>
+    </fieldset>
+    <table id="tbl">
+      <caption>Payment Schedule</caption>
+      <thead>
+        <tr>
+          <th>Month</th>
+          <th>Payment</th>
+          <th>Interest</th>
+          <th>Principal</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody id="tbdy">
+      </tbody>
+    </table>
+  </div>
+  <script>
+    "use strict";
+
+    let tbdy = document.getElementById("tbdy");
+    let tbl = document.getElementById("tbl");
+    let pmt = document.getElementById("pmt");
+    let totalinterest = document.getElementById("totalinterest");
+
+    // function to return formatted currency string
+    const currencyObj = {
+      style: "currency",
+      currency: "USD"
+    };
+
+    function formatCurrency(num) {
+      return new Number(num).toLocaleString("en-US", currencyObj);
+    }
+
+    // clear the table and read only input fields
+    function erase() {
+      tbl.style.visibility = "hidden";
+      tbdy.innerHTML = "";
+      pmt.value = "";
+      totalinterest.value = "";
+    };
+
+    // calculate and display monthly payment breakdown
+    function display() {
+
+      // retrieve values from input forms
+      let principal = parseFloat(document.getElementById("principal").value);
+      let apr = parseFloat(document.getElementById("apr").value);
+      let term = parseFloat(document.getElementById("term").value) * 12; // convert years to months
+      //calculate monthly payment
+      let r = (apr / 100) / 12;
+      let payment = principal / ((((1 + r) ** term) - 1) / (r * (1 + r) ** term));
+      pmt.value = formatCurrency(payment);
+
+      // establish variables that will adjust throughout the loop
+      let balance = principal
+      let totalInterest = 0
+
+      //loop that appends a line in the chart for each months payment 
+      let trNode, tdNode1, tdNode2, tdNode3, tdNode4, tdNode5, txtNode;
+      for (let i = 1; i <= term; i++) {
+        //calculate monthly interest
+        let monthlyInt = balance * r;
+        // subtract monthly interest from monthly payment to calculate principal payment
+        let monthlyPrin = payment - monthlyInt;
+        // calculate new balance by subtracting monthly principal from the balance
+        balance = balance - monthlyPrin;
+        totalInterest += monthlyInt
+        // console.log(i, formatCurrency(monthlyInt), formatCurrency(monthlyPrin), formatCurrency(balance));
+
+        tdNode1 = document.createElement("td");
+        txtNode = document.createTextNode(i);
+        tdNode1.appendChild(txtNode);
+
+        tdNode2 = document.createElement("td");
+        txtNode = document.createTextNode(formatCurrency(payment));
+        tdNode2.appendChild(txtNode);
+
+        tdNode3 = document.createElement("td");
+        txtNode = document.createTextNode(formatCurrency(monthlyInt));
+        tdNode3.appendChild(txtNode);
+
+        tdNode4 = document.createElement("td");
+        txtNode = document.createTextNode(formatCurrency(monthlyPrin));
+        tdNode4.appendChild(txtNode);
+
+        tdNode5 = document.createElement("td");
+        txtNode = document.createTextNode(formatCurrency(balance));
+        tdNode5.appendChild(txtNode);
+
+        trNode = document.createElement("tr");
+        trNode.appendChild(tdNode1);
+        trNode.appendChild(tdNode2);
+        trNode.appendChild(tdNode3);
+        trNode.appendChild(tdNode4);
+        trNode.appendChild(tdNode5);
+
+        tbdy.appendChild(trNode);
+
+        // tbdy.innerHTML += `<tr><td>${i}</td><td>${formatCurrency(payment)}</td><td>${formatCurrency(monthlyInt)}</td><td>${formatCurrency(monthlyPrin)}</td><td>${formatCurrency(balance)}</td></tr>`;
+        tbl.style.visibility = "visible";
+      }
+      totalinterest.value = formatCurrency(totalInterest);
+    }
+
+  </script>
+</body>
+
+</html>
