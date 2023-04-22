@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Dice</title>
+  <style>
+    #container {
+      font-family: Arial, sans-serif;
+      /* organize div items centered in a column */
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 10px;
+      background-color: lightgray;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 5px 10px;
+      text-align: center;
+    }
+
+    #buttons {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-evenly;
+    }
+
+    p {
+      font-size: 1em;
+      color: purple;
+      font-weight: bold;
+    }
+
+    #dice {
+      /* organize div items in a grid, 5 columns, each 100px wide */
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    img {
+      height: 100px;
+      width: 100px;
+      /* image has 10px gray border */
+      border: 10px outset gray;
+      margin: 15px;
+    }
+
+    button {
+      font-size: 1.5em;
+      margin: 5px 5px 10px 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Dice</h1>
+    <h2>Logan Bunch</h2>
+    <div id="buttons">
+      <button onclick="addOne()">Add a Die</button>
+      <button onclick="rollAll()">Roll All</button>
+      <button onclick="rollUnlocked()">Roll Unlocked</button>
+    </div>
+    <p>Click a die to lock it</p>
+    <div id="dice">
+    </div>
+  </div>
+  <script>
+    "use strict";
+    function addOne() {
+      //create DOM img node
+      let image = document.createElement("img");
+      // set its src attribute to die with one pip
+      image.src = "./dice-images/die1.jpg";
+      //set its border color
+      //(DOM won't pick up the css defined color)
+      image.style.borderColor = "gray";
+      // define a listener for its onclick event
+      image.addEventListener("click",
+        function () {
+          image.style.borderColor = "purple";
+        }
+      );
+      // append the image to the dice div 
+      document.getElementById("dice").appendChild(image);
+    }
+
+    function rollAll() {
+      for (let image of document.getElementsByTagName("img")) {
+        // set all die border colors gray
+        image.style.borderColor = "gray";
+        // pick random number from 1 to six
+        let r = Math.round(Math.random() * 5) + 1;
+        // set image source using r
+        image.src = "./dice-images/die" + r + ".jpg";
+      }
+    }
+    function rollUnlocked() {
+      for (let image of document.getElementsByTagName("img")) {
+        if (image.style.borderColor === "gray") {
+          // pick random number from 1 to six
+          let r = Math.round(Math.random() * 5) + 1;
+          // set image source using r
+          image.src = "./dice-images/die" + r + ".jpg";
+        }
+      }
+    }
+  </script>
+</body>
+
+</html>
