@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Slide Carousel #1</title>
+  <style>
+    div {
+      font-family: "Trebuchet MS", sans-serif;
+      padding: 10px;
+      max-width: 500px;
+      max-height: 500px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      background-color: lightgray;
+    }
+
+    h1,
+    h2 {
+      margin: 5px 20px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Slide Carousel #1</h1>
+    <h2>(Logan Bunch)</h2>
+    <img id="photo" src="./images/image0.JPG" onclick="nextSlide()">
+  </div>
+  <script>
+    "use strict";
+
+    // assign couresel DOM element to a variable
+    const couresel = document.getElementById("photo");
+
+    // establish the number of images in the gallery and align the index with the first item of of the image list
+    const SLIDE_COUNT = 5;
+    let slideIndex = 0;
+
+    // set a timed call to call function nextslide() in 5 sec.
+    let timer = window.setTimeout(nextSlide, 5000);
+    // change the source of the image to the next image in the list
+    function nextSlide() {
+      // since user clicked image, cancel the timed call
+      window.clearTimeout(timer);
+
+      // check if couresel is on the last image in the list and if so reset list
+
+      slideIndex++;
+      if (slideIndex === SLIDE_COUNT) {
+        slideIndex = 0;
+      }
+
+      // set src of couresel using new index value
+      couresel.src = "./images/image" + slideIndex + ".JPG"
+
+      // arrange for a new timed call
+      timer = window.setTimeout(nextSlide, 5000);
+    }
+
+  </script>
+</body>
+
+</html>

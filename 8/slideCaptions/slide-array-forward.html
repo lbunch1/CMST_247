@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Slide Carousel #4</title>
+  <style>
+    div {
+      font-family: "Trebuchet MS", sans-serif;
+      padding: 10px;
+      max-width: 500px;
+      max-height: 500px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      background-color: lightgray;
+    }
+
+    h1,
+    h2 {
+      margin: 5px 20px;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    figcaption {
+      background-color: #222;
+      color: #fff;
+      padding: 3px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>Slide Carousel #4</h1>
+    <h2>(Logan Bunch)</h2>
+    <figure>
+      <img id="photo" src="./images/Orchid.JPG" onclick="nextSlide()">
+      <figcaption id="caption">Orchid<figcaption>
+    </figure>
+  </div>
+  <script>
+    "use strict";
+
+    // assign couresel DOM element to a variable
+    const couresel = document.getElementById("photo");
+    const caption = document.getElementById("caption");
+
+    // establish the number of images in the gallery and align the index with the first item of of the image list
+    let slideIndex = 0;
+
+    // an array of the slide captions
+    const slides = ["Orchid", "Butterfly on Azalea", "Duck Family", "Butterfly", "Butterfly on Chrysanthemum"];
+
+    // change the source of the image to the next image in the list
+    function nextSlide() {
+      // check if couresel is on the last image in the list and if so reset list
+
+      slideIndex++;
+      if (slideIndex === slides.length) {
+        slideIndex = 0;
+      }
+
+      // set src of couresel using new index value
+      couresel.src = "./images/" + slides[slideIndex] + ".JPG";
+      caption.innerHTML = slides[slideIndex];
+    }
+
+  </script>
+</body>
+
+</html>

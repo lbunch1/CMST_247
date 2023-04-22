@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Slide Carousel #3</title>
+  <style>
+    #container {
+      font-family: "Trebuchet MS", sans-serif;
+      padding: 10px;
+      max-width: 500px;
+      max-height: 500px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      background-color: lightgray;
+    }
+
+    h1,
+    h2 {
+      margin: 5px 20px;
+    }
+
+    figure {
+      position: relative;
+      /* so that < > buttons are absolute */
+      margin: 0;
+    }
+
+    img {
+      width: 100%;
+      height: auto;
+    }
+
+    #buttons {
+      /* buttons */
+      position: absolute;
+      /* positioned relative to figure */
+      top: 40%;
+      /* 4/10 down from top of figure */
+      width: 100%;
+      /* full width of figure */
+      display: flex;
+      /* contained elements are flex */
+      flex-flow: row nowrap;
+      /* at right and left of figure */
+      justify-content: space-between;
+    }
+
+    .prev,
+    .next {
+      font-size: 2em;
+      padding: .5em;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      /* makes the cursor a pointy hand */
+      user-select: none;
+      /* doesn't allow text to be selected
+                              so that cursor doesn't become stylus */
+      transition: 0.6s ease;
+      /* slows the transition when hovered */
+    }
+
+    .prev:hover,
+    .next:hover {
+      color: black;
+      background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Slide Carousel #3</h1>
+    <h2>(Logan Bunch)</h2>
+    <figure>
+      <img id="photo" src="./images/image0.JPG" alt="">
+      <div id="buttons">
+        <a class="prev" onclick="prev()">&#10094;</a>
+        <a class="next" onclick="next()">&#10095;</a>
+      </div>
+    </figure>
+  </div>
+  <script>
+    "use strict";
+
+    // assign DOM element to a const
+    const photo = document.getElementById("photo");
+
+    // global variables
+    const SLIDE_COUNT = 5;
+    let slideIndex = 0
+
+    // set timer to advance photos automatically 
+    let timer = window.setTimeout(next, 5000);
+
+    //create functions to advance or reverse slideshow
+
+    function next() {
+      // clear any timer
+      window.clearTimeout(timer);
+
+      slideIndex++
+      if (slideIndex === SLIDE_COUNT) {
+        slideIndex = 0;
+      }
+
+      photo.src = "./images/image" + slideIndex + ".JPG";
+
+      // re-establish timer to continue the slideshow in the forward direction
+      timer = window.setTimeout(next, 5000);
+    }
+
+    function prev() {
+      // clear any timer
+      window.clearTimeout(timer);
+
+      slideIndex--
+      if (slideIndex === -1) {
+        slideIndex = SLIDE_COUNT - 1;
+      }
+
+      photo.src = "./images/image" + slideIndex + ".JPG";
+
+      // re-establish timer to continue the slideshow in the reverse direction
+      timer = window.setTimeout(prev, 5000);
+    }
+  </script>
+</body>
+
+</html>

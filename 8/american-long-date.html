@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>American Long Date</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      font-size: 1em;
+    }
+
+    div {
+      padding: 20px;
+      background-color: lemonchiffon;
+    }
+
+    h1,
+    h2 {
+      margin: 5px 00px;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <h1>American Long Date</h1>
+    <h2>Logan Bunch</h2>
+    <p><span class="bold">Today's Date:</span> <span id="output"></span></p>
+  </div>
+  <script>
+    "use strict";
+    // arrays used for output
+    const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+    const dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    // build an object containing today's date
+    let dateObj = new Date();
+    // get the month, day, and year from the date object
+    let m = dateObj.getMonth();  // jan = 0
+    let d = dateObj.getDate();
+    let y = dateObj.getFullYear();
+    let day = dateObj.getDay(); // sunday = 0
+    // format and display American Long Date
+    document.getElementById("output").innerHTML =
+      dayNames[day] + " " + month[m] + " " + d + ", " + y;  
+  </script>
+</body>
+
+</html>
