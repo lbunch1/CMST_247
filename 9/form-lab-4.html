@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Form Lab #4</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 400px;
+      border: 3px solid #666;
+      padding: 10px 25px 20px 25px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+      background-color: whitesmoke;
+    }
+
+    h1 {
+      font-family: "Trebuchet MS", sans-serif;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    form {
+      display: inherit;
+      flex-flow: inherit;
+      background-color: lightgray;
+      padding: 10px 25px;
+    }
+
+    p,
+    select,
+    label,
+    input {
+      margin: 5px 0;
+    }
+
+    p,
+    select {
+      font-size: 1.2em;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+    }
+
+    #buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      height: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Form Lab #4</h1>
+  <h2>Logan Bunch</h2>
+
+  <form method="POST" action="https://webdevbasics.net/scripts/demo.php">
+    <p>What is your <strong>primary</strong> music source?</p>
+    <select name="music-source">
+      <option value="traditional-radio">Traditional Radio</option>
+      <option value="satellite-radio">Satellite Radio</option>
+      <option value="streaming">Streaming</option>
+      <option value="recording">Recording(CD,vinyl,etc.)</option>
+    </select>
+    <p>Where/when do you listen?</p>
+    <fieldset>
+      <label><input type="checkbox" name="home" value="Yes" />Home</label>
+      <label><input type="checkbox" name="office" value="Yes" />Office</label>
+      <label><input type="checkbox" name="gym" value="Yes" />Gym/Exercising/Walking</label>
+      <label><input type="checkbox" name="car" value="Yes" />Car</label>
+    </fieldset>
+    <div id="buttons">
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Reset" />
+    </div>
+  </form>
+
+</body>
+
+</html>

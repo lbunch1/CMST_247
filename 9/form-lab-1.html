@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Form Lab #1</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 400px;
+      border: 3px solid #666;
+      padding: 10px 25px 20px 25px;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+      background-color: whitesmoke;
+    }
+
+    h1 {
+      font-family: "Trebuchet MS", sans-serif;
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    form {
+      background-color: lightgray;
+      padding: 10px 25px;
+    }
+
+    label,
+    input {
+      font-size: 1.1em;
+      margin: 5px 0;
+    }
+
+    label {
+      display: inline-block;
+      /* so width is recognized */
+      width: 100px;
+      /* so can right align */
+      text-align: right;
+      padding-right: 5px;
+    }
+
+    input[type=text],
+    input[type=number] {
+      width: 10em;
+      background-color: whitesmoke;
+    }
+
+    #buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      height: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Form Lab #1</h1>
+  <h2>Logan Bunch</h2>
+
+  <form method="POST" action="https://webdevbasics.net/scripts/demo.php">
+    <label for="name">Name:</label>
+    <input id="name" name="name" type="text" />
+    <label for="age">Age:</label>
+    <input id="age" name="age" type="number" />
+    <div id="buttons">
+      <input type="submit" value="Submit" />
+      <input type="reset" value="Reset" />
+    </div>
+  </form>
+</body>
+
+</html>

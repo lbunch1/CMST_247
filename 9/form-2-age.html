@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Validate Age</title>
+  <meta charset="utf-8">
+  <style>
+    #container {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+      font-family: Arial, sans-serif;
+      width: 400px;
+      border: 3px solid #666;
+      padding: 10px 25px 10px 25px;
+      background-color: whitesmoke;
+    }
+
+    form {
+      background-color: lightgray;
+      padding: 10px 25px;
+    }
+
+    h1,
+    label,
+    input,
+    p {
+      margin: 10px 0px 5px 0px;
+    }
+
+    p {
+      font-size: .8em;
+      text-align: center;
+    }
+
+    label,
+    input {
+      font-size: 1.1em;
+    }
+
+    label {
+      display: inline-block;
+      width: 100px;
+      text-align: right;
+    }
+
+    #buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      height: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Validate Age</h1>
+    <form method="post" action="https://webdevbasics.net/scripts/demo.php" onsubmit="return validate()" target="_blank">
+      <p>25+ years to qualify. Other conditions may apply.</p>
+      <label for="age">Enter age:</label>
+      <input type="number" name="age" id="age" required min="25" max="85" step="1">
+      <div id="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+      </div>
+    </form>
+  </div>
+  <script>
+    "use strict";
+    function validate() {
+      let age = parseInt(document.forms[0]["age"].value);
+      let confirmResponse;
+      if (age < 35) {
+        confirmResponse = window.confirm("Do you own your home? OK=Yes; Cancel=No");
+        return confirmResponse;
+      }
+      return true;
+    }
+  </script>
+</body>
+
+</html>

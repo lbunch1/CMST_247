@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Validate Employment</title>
+  <meta charset="utf-8">
+  <style>
+    #container {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+      font-family: Arial, sans-serif;
+      width: 400px;
+      border: 3px solid #666;
+      padding: 10px 25px 10px 25px;
+      background-color: whitesmoke;
+    }
+
+    form {
+      background-color: lightgray;
+      padding: 10px 25px;
+    }
+
+    h1,
+    input {
+      margin: 10px 0px 5px 0px;
+    }
+
+    select {
+      font-size: 1.1em;
+    }
+
+    #buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      height: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Validate Employment</h1>
+    <form method="post" action="https://webdevbasics.net/scripts/demo.php" onsubmit="return validate()" target="_blank">
+      <select name="employment" id="employment" required>
+        <option value="">Employment Status</option>
+        <option value="employed">Employed</option>
+        <option value="retired">Retired</option>
+        <option value="unemployed">Unemployed</option>
+      </select>
+      <div id="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+      </div>
+    </form>
+  </div>
+  <script>
+    "use strict";
+    function validate() {
+      switch (document.forms[0]["employment"].value) {
+        case "employed":
+          switch (window.confirm("Are you an employee of the federal government? OK=Yes; Cancel=no")) {
+            case true:
+              window.alert("We're sorry, you don't qualify");
+              return false;
+            case false:
+              return true;
+          }
+        case "retired":
+          return true;
+        case "unemployed":
+          window.alert("We're sorry, you don't qualify");
+          return false;
+      }
+    }
+  </script>
+
+</body>
+
+</html>

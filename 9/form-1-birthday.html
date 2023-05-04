@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Validate Month & Date</title>
+  <meta charset="utf-8">
+  <style>
+    #container {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+      font-family: Arial, sans-serif;
+      width: 400px;
+      border: 3px solid #666;
+      padding: 10px 25px 10px 25px;
+      background-color: whitesmoke;
+    }
+
+    form {
+      display: inherit;
+      flex-flow: inherit;
+      align-items: center;
+      background-color: lightgray;
+      padding: 10px 25px;
+    }
+
+    h1,
+    label,
+    input {
+      margin: 10px 0px 5px 0px;
+    }
+
+    label {
+      display: block;
+      font-size: .9em;
+    }
+
+    input[type=text] {
+      font-size: 1em;
+      text-align: center;
+      width: 100px;
+    }
+
+    #buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      height: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Validate Month & Date</h1>
+    <form method="post" action="https://webdevbasics.net/scripts/demo.php" onsubmit="return validate()" target="_blank">
+      <label for="md">Enter month/day of your birthday</label>
+      <input type="text" name="md" id="md" required maxlength="5" pattern="[\d]{2}/[\d]{2}" title="Enter mm/dd"
+        placeholder="mm/dd">
+      <div id="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+      </div>
+    </form>
+  </div>
+  <script>
+    "use strict";
+    function validate() {
+      let input = document.forms[0]["md"].value;
+      let md = input.split("/");
+      let month = parseInt(md[0]);
+      let day = parseInt(md[1]);
+      if (month < 1 || month > 12) {
+        window.alert("Bad month");
+        return false;
+      }
+      let lastDay = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+      if (day < 1 || day > lastDay[month - 1]) {
+        window.alert("Bad date");
+        return false;
+      }
+      return true;
+    }
+  </script>
+
+</body>
+
+</html>

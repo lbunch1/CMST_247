@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Pattern Validation Lab Activity</title>
+  <meta charset="utf-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      color: saddlebrown;
+    }
+
+    #container {
+      width: 80%;
+      margin: auto;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 10px;
+    }
+
+    form {
+      background-color: cornsilk;
+      min-width: 500px;
+      padding: 10px;
+    }
+
+    label {
+      display: inline-block;
+      /* so width is recognized */
+      width: 150px;
+      /* so can right align */
+      text-align: right;
+      font-weight: bold;
+      padding-right: 10px;
+      margin-top: 10px;
+    }
+
+    input {
+      display: inline-block;
+      height: 2em;
+      width: 300px;
+      margin-top: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      display: block;
+      font-size: 1.5em;
+      height: 2em;
+      width: 200px;
+      padding: .25em;
+      margin: 15px auto 0;
+      /* top 15, r/l auto, bottom 0 */
+      border: 2px solid saddlebrown;
+      background-color: wheat;
+      color: saddlebrown;
+      /* text */
+    }
+
+    input[type=submit]:hover,
+    input[type=reset]:hover {
+      /* swap text & background */
+      background-color: saddlebrown;
+      color: wheat;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h2>Pattern Validation Lab Activity</h2>
+    <form name="form" method="post" action="https://webdevbasics.net/scripts/demo.php" target="_blank">
+      <label for="state">State:</label>
+      <input type="text" name="state" id="state" pattern="^[A-Z]{2}$" placeholder="CA"><br>
+      <label for="zip">ZIP:</label>
+      <input type="text" name="zip" id="zip" pattern="^([0-9]{5})(-?([0-9]{4}))?$" placeholder="12345-1234"><br>
+      <label for="tel">Phone:</label>
+      <input type="tel" name="tel" id="tel" pattern="^[0-9]{3}-[0-9]{3}-[0-9]{4}$" placeholder="123-123-1234"><br>
+      <label for="dob">Birthdate:</label>
+      <input type="text" name="dob" id="dob" pattern="^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$" placeholder="mm/dd/yyyy"><br>
+      <label for="plate">License Plate:</label>
+      <input type="text" name="plate" id="plate" pattern="^[A-Z]{3}-[0-9]{3}$" placeholder="ABC-123"><br>
+      <label for="expire">Expires:</label>
+      <input type="text" name="expire" id="expire" pattern="^[0-9]{2}\/[0-9]{2}$" placeholder="mm/yy"><br>
+      <label for="scode">Security Code:</label>
+      <input type="text" name="scode" id="scode" pattern="^[0-9]{3}$" placeholder="123" maxlength="3">
+      <div id="buttons">
+        <input type="submit" class="btn" value="Submit">
+        <input type="reset" class="btn">
+      </div>
+    </form>
+  </div>
+
+  <script>
+    "use strict"
+
+  </script>
+
+</body>
+
+</html>

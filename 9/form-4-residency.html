@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Validate Residency</title>
+  <meta charset="utf-8">
+  <style>
+    #container {
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      /* horizontal */
+      font-family: Arial, sans-serif;
+      width: 400px;
+      border: 3px solid #666;
+      padding: 10px 25px 10px 25px;
+      background-color: whitesmoke;
+    }
+
+    form {
+      background-color: lightgray;
+      padding: 10px 25px;
+    }
+
+    h1,
+    label,
+    input,
+    p {
+      margin: 10px 0px 5px 0px;
+    }
+
+    p {
+      font-size: .8em;
+      text-align: center;
+    }
+
+    label,
+    input {
+      font-size: 1.1em;
+    }
+
+    label {
+      display: inline-block;
+      width: 200px;
+      text-align: right;
+    }
+
+    input[type=text] {
+      width: 50px;
+    }
+
+    #buttons {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-gap: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      height: 2em;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Validate Residency</h1>
+    <form method="post" action="https://webdevbasics.net/scripts/demo.php" onsubmit="return validate()" target="_blank">
+      <p>Offer valid in Kansas, Oklahoma, Texas, Missouri, and Arkansas</p>
+      <label for="state">State of Residence:</label>
+      <input type="text" name="state" id="state" required maxlength="2" pattern="[A-Za-z]{2}"
+        title="2-letter state code" placeholder="KS">
+      <div id="buttons">
+        <input type="submit" value="Submit">
+        <input type="reset" value="Reset">
+      </div>
+    </form>
+  </div>
+  <script>
+    "use strict";
+    function validate() {
+      let loc = document.forms[0]["state"].value;
+      loc = loc.toUpperCase();
+      let states = ["KS", "OK", "TX", "MO", "AR"];
+      for (state of states) {
+        if (state === loc) {
+          return true;
+        }
+      }
+      window.alert("Sorry, you don't qualify");
+      return false;
+    }
+  </script>
+
+</body>
+
+</html>
