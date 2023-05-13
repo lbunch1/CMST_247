@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>My To-Do List</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      color: darkslategray;
+      width: 600px;
+      border: 5px solid darkslategray;
+      background-color: whitesmoke;
+      padding: 20px;
+    }
+
+    h1,
+    h2 {
+      font-family: "Trebuchet MS", sans-serif;
+      margin: 10px 0;
+      padding: 0;
+    }
+
+    #wrapper {
+      background-color: darkslategray;
+      padding: 25px;
+    }
+
+    ul {
+      margin: 15px 0 0;
+      padding: 0;
+    }
+
+    li {
+      display: grid;
+      grid-template-rows: 2em;
+      grid-template-columns: 1fr 2em 2em;
+      list-style-type: none;
+    }
+
+    ul li {
+      background-color: #DDD;
+      border-bottom: 2px solid darkslategray;
+    }
+
+    .what,
+    #plus,
+    .edit,
+    .remove {
+      font-family: Verdana, Arial, Helvetica, sans-serif;
+      border: none;
+      font-size: 1.1em;
+      padding: .2em;
+    }
+
+    .what {
+      grid-column: 1 / 2;
+      align-items: center;
+    }
+
+    #plus {
+      grid-column: 2 / 4;
+    }
+
+    .edit {
+      grid-column: 2 / 3;
+      background-color: inherit;
+    }
+
+    .remove {
+      grid-column: 3 / 4;
+      background-color: inherit;
+    }
+
+    button:hover {
+      background-color: red;
+      color: white;
+    }
+
+    .text-node {
+      cursor: default;
+    }
+
+    .strike {
+      text-decoration: line-through;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>My To-Do List</h1>
+  <h2>Logan Bunch</h2>
+  <div id="wrapper">
+    <li>
+      <input type="text" id="what" class="what">
+      <button id="plus" onclick="addItem()">&plus;</button>
+    </li>
+    <ul id="list">
+    </ul>
+  </div>
+  <script>
+    "use strict";
+
+    // permanent DOM elements
+    const toDoInput = document.getElementById("what");
+    const toDoOutput = document.getElementById("list");
+
+    function addItem() {
+      // create an li element that will contain the todo text and functional buttons
+      let toDo = document.createElement("li");
+      toDo.classList.add("what");
+      // create text element that will strike out when clicked
+      let txtNode = document.createElement("span");
+      txtNode.classList.add("text-node");
+      txtNode.innerText = toDoInput.value;
+      // toggles "strike" class name which puts a line through the todo item
+      txtNode.addEventListener("click", function () {
+        txtNode.classList.toggle("strike");
+      })
+      // create edit button
+      let edit = document.createElement("button");
+      edit.classList.add("edit");
+      edit.innerHTML = "&#9998;";
+      // moves the contents of text element to the input field and removes the todo node
+      edit.addEventListener("click", function () {
+        toDoInput.value = txtNode.innerText;
+        toDo.remove()
+      });
+      // create remove button
+      let remove = document.createElement("button");
+      remove.classList.add("remove");
+      remove.innerHTML = "&#9932;";
+      // removes todo node
+      remove.addEventListener("click", function () {
+        toDo.remove();
+      })
+
+      // add all chide todo elements to todo node list
+      toDo.appendChild(txtNode);
+      toDo.appendChild(edit);
+      toDo.appendChild(remove);
+
+      //add completed todo node to the ul element
+      toDoOutput.appendChild(toDo);
+
+    }
+  </script>
+
+</body>
+
+</html>

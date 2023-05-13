@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Golden Fleece Resort</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: saddlebrown;
+    }
+
+    #container {
+      width: 600px;
+      padding: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    form {
+      background-color: cornsilk;
+      min-width: 500px;
+      padding: 10px;
+    }
+
+    label {
+      display: inline-block;
+      /* so width is recognized */
+      width: 150px;
+      /* so can right align */
+      text-align: right;
+      font-weight: bold;
+      padding-right: 10px;
+      margin-top: 10px;
+    }
+
+    input,
+    select {
+      height: 2em;
+      width: 300px;
+      margin-top: 10px;
+    }
+
+    input[type=submit],
+    input[type=reset] {
+      font-size: 1.5em;
+      height: 2em;
+      width: 200px;
+      padding: .25em;
+      border: 2px solid saddlebrown;
+      background-color: wheat;
+      color: saddlebrown;
+      /* text */
+    }
+
+    input[type=submit]:hover,
+    input[type=reset]:hover {
+      /* swap text & background */
+      background-color: saddlebrown;
+      color: wheat;
+    }
+
+    .small {
+      font-size: .7em;
+      color: #505050;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Golden Fleece Resort</h1>
+    <p>The Golden Fleece Resort invites you to spend a night and a day at our beautiful resort ABSOLUTELY FREE!</p>
+    <p>Register below for this wonderful opportunity. Be sure to indicate the date you wish to arrive.</p>
+    <p class="small">To take advantage of this offer, you must agree to attend an informal sales presentation. Offer is
+      open to certain non-local people 25 years old and above. Other restrictions apply. If married, both spouses must
+      attend the sales presentation.</p>
+    <form method="post" action="https://webdevbasics.net/scripts/demo.php" onsubmit="return validate()">
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name" required><br>
+      <label for="email">E-Mail:</label>
+      <input type="email" placeholder="name@emailhost" name="email" id="email" required><br>
+      <label for="zip">ZIP:</label>
+      <input type="text" pattern="[0-9]{5}" maxlength="5" title="5 digit ZIP code" name="zip" id="zip" required><br>
+      <label for="state">State:</label>
+      <input type="text" pattern="[a-zA-Z]{2}" title="Enter your 2 letter state code" value="TX" maxlength="2"
+        name="state" id="state" required><br>
+      <label for="age">Age:</label>
+      <input type="number" min="25" step="1" maxlength="2" name="age" id="age" required><br>
+      <label for="mstatus">Marital Status:</label>
+      <select name="mstatus" id="mstatus">
+        <option value="">Select One</option>
+        <option value="single">Single</option>
+        <option value="married">Married</option>
+        <option value="separated">Separated</option>
+        <option value="divorced">Divorced</option>
+        <option value="widowed">Widowed</option>
+        <option value="dompart">Domestic Partnership</option>
+      </select><br>
+      <label for="arvldate">Arrival Date:</label>
+      <input type="text" pattern="[0-9]{2}\/[0-9]{2}" title="Enter arrival date in mm/dd format" placeholder="mm/dd"
+        maxlength="5" name="arvldate" id="arvldate" required>
+      <label> </label>
+      <input type="submit" value="Register"><br>
+      <label> </label>
+      <input type="reset">
+    </form>
+  </div>
+  <script>
+    "use strict";
+    // form DOM element
+    const form = document.forms[0];
+
+    // Validation arrays
+    const validStates = ['AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY'];
+    const invalidState = ['MI', 'KS', 'OK', 'AK'];
+    const lastDay = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+    // validation function
+    function validate() {
+      // convert state to uppercase
+      form["state"].value.toUpperCase();
+      //check if the entered state is a valid US state
+      if (!validStates.includes(form["state"].value)) {
+        window.alert("Please enter a valid state code");
+        return false
+        // Check if the entered state is among the disqualifying states
+      } else if (invalidState.includes(form["state"].value)) {
+        if (window.confirm("Do you live within 100 miles of Branson, Mo? OK=Yes, Cancel=No")) {
+          window.alert("Thank you, but unfortunately you do not qualify");
+          return false;
+        }
+      }
+      // check if the user is under 35, if so confirm if they own a home
+      if (parseInt(form["age"].value) < 35) {
+        if (!window.confirm("Do you own your home? OK=Yes, Cancel=No")) {
+          window.alert("Thank you, unfortunately you do not qualify");
+          return false;
+        }
+      }
+      // Check marital status for separated or domestic partner, or if divorced confirm property encumbrances
+      if (form["mstatus"].value === "separated" || form["mstatus"].value === "dompart") {
+        return false;
+      } else if (form["mstatus"].value === "divorced") {
+        if (window.confirm("Do you any property encumbrances? Ok=Yes, Cancel=No")) {
+          window.alert("Thank you, unfortunately you do not qualify");
+          return false;
+        }
+      }
+      // convert date string to two seperate integers
+      let month = parseInt(form["arvldate"].value.split("/")[0]);
+      let day = parseInt(form["arvldate"].value.split("/")[1]);
+      // check if date is valid month and day of month
+      if (month > 12 || day === 0 || day > lastDay[month - 1]) {
+        window.alert("Please enter a valid arrival date");
+        return false;
+      }
+      // if all above passes, confirm that one of the following marital statuses are selected then pass true to the form action
+      if (
+        form["mstatus"].value === "single"
+        || form["mstatus"].value === "married"
+        || form["mstatus"].value === "widowed"
+      ) {
+        return true;
+      }
+
+    }
+  </script>
+</body>
+
+</html>

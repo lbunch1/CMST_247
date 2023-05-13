@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Ping Pong</title>
+  <meta charset="utf-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    #container {
+      width: 100%;
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 10px;
+      background-color: whitesmoke;
+      font-family: Arial, sans-serif;
+      font-size: 1.2em;
+      color: darkslategray;
+    }
+
+    h1 {
+      margin: 5px 0;
+    }
+
+    fieldset {
+      border: none;
+      background-color: gainsboro;
+      padding: 0px 10px 10px 10px;
+    }
+
+    legend {
+      font-size: .9em;
+    }
+
+    .fixwdth {
+      display: inline-block;
+      width: 105px;
+      text-align: right;
+    }
+
+    input {
+      height: 2em;
+      padding: .25em;
+      margin-top: 15px;
+      background-color: whitesmoke;
+    }
+
+    button {
+      width: 100%;
+      font-size: 1.2em;
+      height: 1.8em;
+      padding: .2em;
+      margin-top: 15px;
+      background-color: whitesmoke;
+      color: darkslategray;
+    }
+
+    button:hover {
+      background-color: darkgray;
+      color: whitesmoke;
+    }
+
+    /* ping-pong box container, i.e. id="output" */
+    #output {
+      margin-top: 10px;
+      width: 80%;
+      display: flex;
+      flex-flow: row wrap;
+      /* wrap boxes inside this flex container */
+    }
+
+    /* ping-pong boxes, i.e. class="box" */
+    .box {
+      width: 80px;
+      height: 80px;
+      border-radius: 15%;
+      /* round corners */
+      margin: 5px;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Ping Pong</h1>
+    <fieldset>
+      <legend>Enter your numbers</legend>
+      <label><span class="fixwdth">Draw&nbsp;</span>
+        <input type="number" id="range" size="5" min="1" max="100" step="1" value="12"
+          onclick="erase()">&nbsp;boxes</label><br>
+      <label><span class="fixwdth">Ping every&nbsp;</span>
+        <input type="number" id="ping" size="5" min="2" max="10" step="1" value="2"
+          onclick="erase()">&nbsp;boxes</label><br>
+      <label><span class="fixwdth">Pong every&nbsp;</span>
+        <input type="number" id="pong" size="5" min="2" max="10" step="1" value="3"
+          onclick="erase()">&nbsp;boxes</label><br>
+      <button onclick="display()">Do Ping Pong</button>
+    </fieldset>
+    <div id="output">
+    </div>
+  </div>
+  <script>
+    "use strict";
+    class Box {
+      // Add static properties fo the ping pong values;
+      static ping;
+      static pong;
+      constructor(number) {
+        this._div = document.createElement("div");
+        this._div.className = "box";
+        this._div.innerHTML = number.toString();
+        this._div.style.backgroundColor = "lightgray";
+        this._div.style.color = "whitesmoke";
+        this.setTextAndColor();
+      }
+      get div() {
+        return this._div;
+      }
+      setTextAndColor() {
+        //set box's color and content based on it's number.
+        // get the number of the box's DOM node
+        let number = parseInt(this._div.innerHTML);
+        if ((number % Box.ping) === 0 && (number % Box.pong === 0)) {
+          this._div.style.backgroundColor = "purple";
+          this._div.innerHTML += "<br>PING<br>PONG";
+        } else if (number % Box.ping === 0) {
+          this._div.style.backgroundColor = "red";
+          this._div.innerHTML += "<br>PING";
+        } else if (number % Box.pong === 0) {
+          this._div.style.backgroundColor = "blue";
+          this._div.innerHTML += "<br>PONG";
+        }
+      }
+    }
+    function display() {
+      // input the range value and convert to an integer
+      // set the static Box properties of ping and pong
+      Box.ping = parseInt(document.getElementById("ping").value);
+      Box.pong = parseInt(document.getElementById("pong").value);
+      let range = parseInt(document.getElementById("range").value);
+      let box;
+      // loop for k from 1 to the range value creating a box for each
+      for (let k = 1; k <= range; k++) {
+        // create a box containing the current value of k
+        box = new Box(k);
+        // get the div property and append it to the <div id="output">
+        document.getElementById("output").appendChild(box.div);
+      }
+    }
+    function erase() {
+      document.getElementById("output").innerHTML = "";
+    }
+  </script>
+</body>
+
+</html>

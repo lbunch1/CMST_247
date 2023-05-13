@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>How Old Are You?</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      color: mintcream;
+    }
+
+    #container {
+      width: 500px;
+      text-align: center;
+      padding: 10px;
+      background-color: mediumseagreen;
+    }
+
+    p {
+      margin: 10px 0px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>How Old Are You?</h1>
+    <p><label for="dob">Enter your birth date</label>&nbsp;&nbsp;<input type="date" id="dob"></p>
+    <p>To calculate your age&nbsp;&nbsp;<button onclick="display()">Get Age</button></p>
+    <p>Today's date is&nbsp;<span id="today"></span></p>
+    <p>Today you are&nbsp;<span id="age"></span>&nbsp;years old</p>
+  </div>
+  <script>
+    "use strict";
+    function display() {
+      // get todays date and display it as date string in the "today" span
+      let today = new Date();
+      document.getElementById("today").innerHTML = today.toDateString();
+      // extract year, month, and date of "today"
+      today = {
+        date: today.getDate(),
+        month: today.getMonth() + 1,
+        year: today.getFullYear()
+      };
+
+      // retrieve input birthday and split into year, month, day
+      let bDayArr = document.getElementById("dob").value.split("-");
+      let dob = {
+        date: parseInt(bDayArr[2]),
+        month: parseInt(bDayArr[1]),
+        year: parseInt(bDayArr[0])
+      };
+      // calculate age
+      let age = today.year - dob.year;
+      if (today.month < dob.month || (today.month === dob.month && today.date < dob.date)) {
+        age = age - 1;
+      }
+      document.getElementById("age").innerHTML = age;
+
+
+    }
+  </script>
+</body>
+
+</html>

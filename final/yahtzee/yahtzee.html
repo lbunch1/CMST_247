@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Yahtzee Dice</title>
+  <style>
+    #container {
+      font-family: Arial, sans-serif;
+      /* organize div items centered in a column */
+      display: flex;
+      flex-flow: column nowrap;
+      align-items: center;
+      padding: 10px;
+      background-color: lightgray;
+    }
+
+    h1,
+    h2,
+    p {
+      margin: 5px 10px;
+      text-align: center;
+    }
+
+    #buttons {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: space-evenly;
+    }
+
+    p {
+      font-size: 1em;
+      color: purple;
+      font-weight: bold;
+    }
+
+    #dice {
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: center;
+    }
+
+    img {
+      height: 100px;
+      width: 100px;
+      border: 10px outset gray;
+      margin: 15px;
+    }
+
+    @media only screen and (max-width: 768px) {
+      #buttons {
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+      }
+    }
+
+    button {
+      font-size: 2em;
+      width: 6em;
+      padding: .25em;
+      margin: 5px 5px 10px 0px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="container">
+    <h1>Yahtzee Dice</h1>
+    <h2>Logan Bunch</h2>
+    <p>Click a die to lock it</p>
+    <div id="dice">
+    </div>
+    <div id="buttons">
+      <button id="startagain" onclick="startAgain()">Start Round</button>
+      <button id="roll" onclick="roll()">Roll</button>
+      <button>Rolls Left <span id="rollsleft"></span></button>
+    </div>
+  </div>
+  <script>
+    "use strict";
+
+    // track the amount of rolls left
+    let rolls = 3;
+
+    // reusable DOM elements
+    const rollCounter = document.getElementById("rollsleft");
+    rollCounter.innerHTML = rolls;
+    const rollButton = document.getElementById("roll");
+
+    // function to toggle border color
+    function changeBorderColor(element) {
+      if (element.style.borderColor === "gray" && rolls !== 3) { // Check for current border color and prevents locking die before the first roll
+        element.style.borderColor = "purple";
+      } else {
+        element.style.borderColor = "gray";
+      }
+    }
+
+    //creates the 5 dice elements
+    for (let i = 0; i < 5; i++) {
+      let die = document.createElement("img");
+      die.src = "./dice-images/die1.jpg";
+      die.style.borderColor = "gray";
+      // add click event that changes border color
+      die.addEventListener("click", () => changeBorderColor(die));
+      document.getElementById("dice").appendChild(die);
+    }
+
+    // rolls all unlocked dice using random number to set image source
+    function roll() {
+      for (let image of document.getElementsByTagName("img")) {
+        if (image.style.borderColor === "gray") {
+          let rand = (Math.round(Math.random() * 5) + 1);
+          image.src = "./dice-images/die" + rand + ".jpg";
+        }
+      }
+      // deplete the roll counter by one
+      rolls--;
+      rollCounter.innerHTML = rolls;
+      // after the last roll, the roll button is disabled.
+      if (rolls === 0) {
+        rollButton.setAttribute("disabled", "");
+      }
+    }
+
+    //reset the game
+    function startAgain() {
+      for (let image of document.getElementsByTagName("img")) {
+        image.src = "./dice-images/die1.jpg";
+        image.style.borderColor = "gray";
+      }
+      rolls = 3;
+      rollCounter.innerHTML = rolls;
+      rollButton.removeAttribute("disabled");
+    }
+
+  </script>
+</body>
+
+</html>
