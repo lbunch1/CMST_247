@@ -80,6 +80,10 @@
       cursor: default;
     }
 
+    .darken {
+      background-color: darkgray;
+    }
+
     .strike {
       text-decoration: line-through;
     }
@@ -137,8 +141,9 @@
       txtNode.classList.add("text-node");
       txtNode.innerText = toDoText;
       // toggles "strike" class name which puts a line through the todo item
-      txtNode.addEventListener("click", function () {
+      toDo.addEventListener("click", function () {
         txtNode.classList.toggle("strike");
+        toDo.classList.toggle("darken");
       })
       // create edit button
       let edit = document.createElement("button");
