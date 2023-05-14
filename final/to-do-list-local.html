@@ -104,14 +104,38 @@
     const toDoInput = document.getElementById("what");
     const toDoOutput = document.getElementById("list");
 
-    function addItem() {
+    // List to hold todo contents to sync with localStorage
+    let localTodo = [];
+
+    window.addEventListener("load", function () {
+      if (localStorage.todo) {
+        for (let note of JSON.parse(localStorage.todo)) {
+          addItem(note);
+        }
+      }
+    })
+
+
+    function addItem(text) {
+
+      let toDoText = text ? text : toDoInput.value;
+
+      let index = localTodo.length;
+
+      localTodo.push(toDoText);
+      if (!text) {
+
+        localStorage.setItem("todo", JSON.stringify(localTodo));
+      }
+
+
       // create an li element that will contain the todo text and functional buttons
       let toDo = document.createElement("li");
       toDo.classList.add("what");
       // create text element that will strike out when clicked
       let txtNode = document.createElement("span");
       txtNode.classList.add("text-node");
-      txtNode.innerText = toDoInput.value;
+      txtNode.innerText = toDoText;
       // toggles "strike" class name which puts a line through the todo item
       txtNode.addEventListener("click", function () {
         txtNode.classList.toggle("strike");
@@ -122,6 +146,8 @@
       edit.innerHTML = "&#9998;";
       // moves the contents of text element to the input field and removes the todo node
       edit.addEventListener("click", function () {
+        localTodo.splice(index, 1);
+        localStorage.setItem("todo", JSON.stringify(localTodo))
         toDoInput.value = txtNode.innerText;
         toDo.remove()
       });
@@ -131,6 +157,8 @@
       remove.innerHTML = "&#9932;";
       // removes todo node
       remove.addEventListener("click", function () {
+        localTodo.splice(index, 1);
+        localStorage.setItem("todo", JSON.stringify(localTodo))
         toDo.remove();
       })
 
